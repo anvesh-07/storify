@@ -54,7 +54,6 @@ import {
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { usePathname } from "next/navigation";
-import { useSession } from "@/lib/better-auth/auth-client";
 
 interface Action {
   name: string;
@@ -300,7 +299,6 @@ export const ShareFileForm = ({
   isShareDialogOpen: boolean;
   setIsShareDialogOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<TShareFileForm>({
     resolver: zodResolver(permissionFormSchema),
@@ -311,17 +309,10 @@ export const ShareFileForm = ({
   });
 
   async function onSubmit(values: TShareFileForm) {
-    if (values.email === session?.user.email) {
-      toast.error("You cannot share the file with yourself.", {
-        description: "Please enter a different email address.",
-      });
-      return;
-    }
-
     setIsLoading(true);
     const res = await updateFilePermissions(file, values);
 
-    toast.warning(res.message, {
+    toast(res.message, {
       description: res.description,
     });
 

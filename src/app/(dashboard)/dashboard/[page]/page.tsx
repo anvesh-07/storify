@@ -1,6 +1,6 @@
 import { generatePageKey } from "@/lib/utils";
 import PageFiles from "./_components/page-files";
-// import SubscriptionPage from "./_components/page-subscription";
+import SubscriptionPage from "./_components/page-subscription";
 
 interface Props {
   params: Promise<{
@@ -22,11 +22,11 @@ const page = async ({ params }: Props) => {
     <>
       <h1 className="capitalize">{page}</h1>
       <br />
-      <PageFiles page={key} />
-      {/* {page === "subscription" ? (
+      {page === "subscription" ? (
         <SubscriptionPage />
       ) : (
-      )} */}
+        <PageFiles page={key} />
+      )}
     </>
   );
 };

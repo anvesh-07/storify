@@ -23,7 +23,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { paragraphVariants } from "@/components/custom/p";
 import { usePathname } from "next/navigation";
-// import { SearchBar } from "./search-bar";
+import { SearchBar } from "./search-bar";
 
 // Menu items.
 const items = [
@@ -67,7 +67,9 @@ export function AppSidebar() {
         {/* Sidebar Header here */}
         <SidebarHeader>
           <SidebarMenu className="space-y-4 mt-3">
-            <SidebarMenuItem>{/* <SearchBar /> */}</SidebarMenuItem>
+            <SidebarMenuItem>
+              <SearchBar />
+            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarHeader>
 
