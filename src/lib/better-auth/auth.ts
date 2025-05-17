@@ -28,33 +28,24 @@ export const auth = betterAuth({
           await db();
 
           const isSubAvil = await Subscription.findOne({ subscriber: user.id });
+          if (!isSubAvil) {
+            const subs = await Subscription.create({
+              subscriber: user.id,
+              status: "activated",
+            });
 
-          if (isSubAvil) {
-            return;
-          }
+            const userCollection = dbClient.collection("user");
 
-          const subs = await Subscription.create({
-            subscriber: user.id,
-            status: "activated",
-          });
-
-          const userCollection = dbClient.collection("user");
-
-          await userCollection.updateOne(
-            {
-              _id: new ObjectId(subs.subscriber),
-            },
-            {
-              $set: { subscription: subs._id },
+            if (ObjectId.isValid(subs.subscriber)) {
+              await userCollection.updateOne(
+                { _id: new ObjectId(subs.subscriber) },
+                { $set: { subscription: subs._id } }
+              );
             }
-          );
+          }
         } catch (error) {
-          console.log(
-            "Error in creating subscription in auth before hook: ",
-            error
-          );
-
-          throw c.redirect("/sign-in");
+          console.error("Error in after hook:", error);
+          return c.redirect("/sign-in");
         }
       }
     }),
