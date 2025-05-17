@@ -34,9 +34,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import usePaddle from "@/hooks/use-paddle";
+
 import { APP_URL } from "@/lib/env";
 import { cancelSubscription, createPaddlePrice } from "@/action/paddle.action";
+import usePaddle from "@/hooks/use-paddle";
 
 interface Props {
   isLoading: boolean;

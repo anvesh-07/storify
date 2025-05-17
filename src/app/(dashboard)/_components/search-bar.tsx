@@ -58,7 +58,6 @@ const SearchBar = () => {
           <RiArrowRightFill />
         </div>
       )}
-      ch
       {state === "collapsed" && (
         <Button variant="ghost" size="icon" onClick={handleDialogOpen}>
           <Search />
